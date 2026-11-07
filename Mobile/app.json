@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "SlowRoads",
+    "slug": "slowroads",
+    "scheme": "slowroads",
+    "version": "0.1.0",
+    "orientation": "landscape",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#080d14",
+    "android": {
+      "package": "com.harleytg.slowroads",
+      "versionCode": 1
+    },
+    "plugins": [
+      "./plugins/withSlowRoadsAssets"
+    ]
+  }
+}
