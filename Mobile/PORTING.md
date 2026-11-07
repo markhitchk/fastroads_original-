@@ -1,22 +1,38 @@
-# SlowRoads Android parity checklist
+# Native SlowRoads parity tracker
 
-This is a staged migration from the cleaned archived browser snapshot, not a claim that its Three.js/WebGL renderer is already native.
+Source baseline: root `static/js/main.e7a33c55.chunk.js` on cleaned `master`.
+Android implementation: `Mobile/src/` on `react-native-android`.
 
-| Component | Android status | Source / next check |
+| Feature | Native progress | Reference |
 | --- | --- | --- |
-| App name, Android ID, landscape | Scaffolded | `app.json` |
-| React Native app shell | Scaffolded | `App.js` |
-| Bundled offline game files | Configured, unverified | `plugins/withSlowRoadsAssets.js` |
-| Browser 3D renderer | Reused via WebView | `../static/js/main.e7a33c55.chunk.js` |
-| Default vehicles / road complexity | Reused from cleaned master | Root game JS |
-| Mobile steering/accelerator UI | Not verified | Test existing browser controls |
-| Touch / controller / keyboard inputs | Not verified | Android device testing |
-| Audio unlock / focus handling | Not verified | Android lifecycle testing |
-| Saved settings / progress | Not verified | WebView localStorage testing |
-| Performance / GPU / WebGL | Not verified | Android device testing |
-| APK build / installation | Not run | Expo prebuild + Gradle |
-| Full native engine rewrite | Not started | Separate engineering stage |
+| App title, landscape, Android ID | Scaffolded | `Mobile/app.json` |
+| WebView removed | Done | `Mobile/App.js` and package.json |
+| Native GL surface / perspective camera | Prototype | `src/render/NativeRenderer.js` |
+| Procedural road geometry | Prototype, **not parity** | `src/engine/road.js` |
+| Hills, off-world, weather, seasons | Missing | Archived JS / scene options |
+| Original roadster 3D mesh and wheels | Missing; placeholder geometry | `static/media/roadster-07.*` |
+| Speed/accelerate/brake baseline | Partial first-pass approximation | Original Roadster metrics |
+| Suspension, collision and handling | Missing | Archived vehicle physics code |
+| Roadster, Bike, Coach selection | Missing | Archived vehicle map |
+| Touch buttons | New Android implementation | `src/NativeDrivingGame.js` |
+| Keyboard/controller/gyro | Missing | Platform input work |
+| Full original HUD/menu/settings | Missing | Archived React UI |
+| Cameras, autopilot, cruise control | Missing | Archived game logic |
+| Audio, haptics, local settings | Missing | Original behavior |
+| GPU/native GL rendering test on device | Not performed | Requires installed debug APK |
+| Side-by-side original appearance/gameplay | Not performed | Requires reference run |
+| Debug APK | Not built | Gradle |
 
-## Parity rule
+## Source behavior values verified from the archive
 
-Do not add the previously removed Fast Roads custom vehicles, the Wide or Straight road modes, or Ultra+. Preserve the original game's default modes and game behavior.
+- Roadster topSpeed = 45, accel = 9, brake = 8
+- Default road complexities: Casual, Normal, Hard
+- Standard vehicles: Roadster, Bike, Coach (availability flags in original game differ)
+- Default scene: Hills
+- Original app's underlying 3D game is compiled/minified JavaScript with
+  WebGL and browser dependencies, and is *not* directly usable as a native
+  React Native module.
+
+**Acceptance criterion:** 1:1 means the same visible layout, assets,
+gameplay mechanics, UI interactions, controls, persistence, audio and camera
+behavior. Passing the foundational native tests does not constitute parity.

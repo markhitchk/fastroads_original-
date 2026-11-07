@@ -1,48 +1,77 @@
-# SlowRoads — React Native Android
+# SlowRoads — true React Native Android port (in progress)
 
-This folder starts the **SlowRoads** Android port on the `react-native-android` branch. The main branch remains the saved browser version of the game.
+**Branch:** react-native-android  
+**App:** SlowRoads  
+**Package:** com.harleytg.slowroads
+
+## What this project is
+
+A native Android 3D game project using React Native, Expo SDK 58, and
+**expo-gl / Android OpenGL ES**. The renderer uses native GPU resources and
+custom shaders; the controls and game HUD are native React Native views.
+
+**No WebView. No browser-hosted game. No HTML or DOM rendering.**
+
+The existing archived website sources in the parent repository remain a
+reference for the original game. They are not loaded or executed by the
+Android app. The abandoned offline WebView asset-copy plugin has been removed.
 
 ## Current implementation
 
-- React Native Android application with **SlowRoads** as the app name
-- Expo SDK 58 / React Native 0.88
-- Android package: `com.harleytg.slowroads`
-- Landscape layout
-- Offline WebView host for the **existing** browser-game code
-- Config plugin copies the repository's `index.html`, `alea.min.js`, `favicon_circle.svg`, `manifest.json`, and `static/` assets into the Android application at prebuild time
-- Error/retry screen and external-link handling
+- Native OpenGL ES rendering loop with depth testing and perspective camera
+- A dynamically generated, curved roadway with lane markings and terrain
+- Low-poly scenery and a temporary roadster-shaped 3D vehicle
+- Real native multitouch steer, throttle, brake, pause, and reset controls
+- Roadster baseline speed / acceleration / braking values drawn from the archive
+- Distance and MPH HUD, pause/resume on Android app lifecycle
+- Tests for road generation, simple physics, native matrix math, and geometry
 
-**Scope:** This is a first-stage hybrid shell, not a completed native rewrite. The 3D rendering engine and game controls are currently the archived browser implementation. Touch input, WebGL compatibility, performance, and audio must be tested on real Android devices. No APK has been verified yet.
+**THIS IS NOT A COMPLETE 1:1 GAME PORT YET.** Its procedural road layout,
+terrain, model, textures, sounds, driving/collision physics, weather, menus,
+vehicle inventory, and camera modes are temporary or absent. A faithful
+port requires extracting and reimplementing those systems from the archived
+compiled game. Do not publish or market this as parity-complete.
 
-## Build locally
+## Run and test
 
-Requirements: Node.js 22.13+ (or 24), Android SDK, Java 17, and an Android device or emulator.
+Install Node.js 22.13+, Android SDK (compile SDK 37), Java 17, and use an
+Android device with OpenGL ES support. Run:
 
-```sh
+~~~sh
 git checkout react-native-android
 cd Mobile
 npm install
+npm test
 npx expo install --fix
-npm run prebuild
-npm run android
-```
+npx expo run:android
+~~~
 
-Do not attempt this in Expo Go: the offline game assets are copied into the generated native Android project during prebuild. After changing a game asset in the repository root, run `npm run prebuild` again to refresh the copy.
+To produce an Android debug APK after prebuild:
 
-For an APK build after prebuild:
-
-```sh
+~~~sh
 cd android
 ./gradlew assembleDebug
-```
+~~~
 
-The debug APK is normally generated under `android/app/build/outputs/apk/debug/`.
+This compiles Android native code, so it is not a browser application. An
+installable APK has **not** been built or tested in this repository update.
 
-## Next stages
+## Next required parity stages
 
-1. Verify the bundled browser build actually renders in Android WebView (WebGL, texture URLs, canvas resizing, landscape, touch, audio, saved settings).
-2. Implement native lifecycle integration (resume/pause), back action, display cutout handling, Android controls, and measured performance checks.
-3. Decide whether to keep a hybrid 3D game surface with React Native controls or rewrite the WebGL engine for a genuinely native renderer. That is significantly more work than a WebView host.
-4. Check the original game's intellectual-property and distribution permissions before publicly publishing or distributing the Android app. The archived browser code is not an official source release.
+1. Recreate the original seeded procedural road spline, heightmap, scenery,
+   weather and generation/streaming algorithms.
+2. Port the original 3D vehicle model and wheels, terrain textures, materials,
+   engine sounds and environmental audio.
+3. Match driving physics: collision, suspension, traction, slip, steering,
+   cruise control, autopilot, road friction and speed conversion.
+4. Rebuild every original screen, controls panel, settings, camera modes,
+   environment selection, state persistence, and accessibility.
+5. Verify side-by-side on Android hardware against the original browser game.
 
-The `master` branch and the original website files should not be modified for Android-specific work.
+See [PORTING.md](./PORTING.md) for the parity table and source references.
+
+## Ownership and distribution
+
+The original Slow Roads game is credited to anslo. This repository's
+browser snapshot is not an official open-source release. Verify the rights
+to redistribute modified game code/assets before release.
