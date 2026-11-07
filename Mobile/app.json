@@ -3,13 +3,13 @@
     "name": "SlowRoads",
     "slug": "slowroads",
     "scheme": "slowroads",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "orientation": "landscape",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#90b5cb",
     "android": {
       "package": "com.harleytg.slowroads",
-      "versionCode": 2
+      "versionCode": 3
     },
     "platforms": [
       "android"

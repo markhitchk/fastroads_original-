@@ -6,6 +6,7 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 | Feature | Native progress | Reference |
 | --- | --- | --- |
 | App title, landscape, Android ID | Scaffolded | `Mobile/app.json` |
+| Archived original logo, wordmark, tagline | Native SVG/text implementation | `src/components/SlowRoadsBrand.js` |
 | WebView removed | Done | `Mobile/App.js` and package.json |
 | Native GL surface / perspective camera | Prototype | `src/render/NativeRenderer.js` |
 | Procedural road geometry | Prototype, **not parity** | `src/engine/road.js` |
@@ -21,7 +22,7 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 | Audio, haptics, local settings | Missing | Original behavior |
 | GPU/native GL rendering test on device | Not performed | Requires installed debug APK |
 | Side-by-side original appearance/gameplay | Not performed | Requires reference run |
-| Debug APK | Not built | Gradle |
+| Standalone release APK | CI workflow packages release + verifies embedded JS; on-device check pending | `.github/workflows/slowroads-native-android.yml` |
 
 ## Source behavior values verified from the archive
 

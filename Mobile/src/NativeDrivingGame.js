@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { GLView } from 'expo-gl';
+import SlowRoadsBrand from './components/SlowRoadsBrand';
 import { createInitialState, speedMph, stepGame } from './engine/physics.js';
 import { createNativeRenderer } from './render/NativeRenderer.js';
 
@@ -126,7 +127,7 @@ export default function NativeDrivingGame() {
     <View style={styles.root}>
       {error ? (
         <View style={styles.errorBox}>
-          <Text style={styles.title}>SlowRoads</Text>
+          <SlowRoadsBrand variant="splash" />
           <Text style={styles.errorText}>Native OpenGL rendering failed:</Text>
           <Text selectable style={styles.errorDetail}>{error}</Text>
           <Pressable onPress={retry} style={styles.action}>
@@ -141,7 +142,7 @@ export default function NativeDrivingGame() {
         />
       )}
       <View pointerEvents="none" style={styles.hud}>
-        <Text style={styles.brand}>S L O W   R O A D S</Text>
+        <SlowRoadsBrand />
         <Text style={styles.speed}>{hud.speed} <Text style={styles.speedUnit}>MPH</Text></Text>
         <Text style={styles.distance}>{hud.distance} m</Text>
         <Text style={styles.alpha}>NATIVE ENGINE • EARLY PORT</Text>
@@ -200,7 +201,6 @@ export default function NativeDrivingGame() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#90b5cb' },
   hud: { position: 'absolute', top: 16, left: 30, alignItems: 'flex-start' },
-  brand: { color: '#f8fafb', fontWeight: '700', letterSpacing: 3, fontSize: 15, textShadowColor: '#33414f', textShadowRadius: 6 },
   speed: { color: '#f8fafb', fontWeight: '600', fontSize: 40, marginTop: 2, textShadowColor: '#33414f', textShadowRadius: 5 },
   speedUnit: { fontSize: 13, fontWeight: '400' },
   distance: { color: '#f8fafb', fontSize: 15 },

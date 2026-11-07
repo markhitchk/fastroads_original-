@@ -25,6 +25,7 @@ Android app. The abandoned offline WebView asset-copy plugin has been removed.
 - Original Roadster OBJ vertices/faces and wheel geometry converted into native buffers
   and checked in as JavaScript arrays
 - Roadster baseline speed / acceleration / braking values drawn from the archive
+- Native rendering of the archived Slow Roads emblem and lowercase wordmark
 - Distance and MPH HUD, pause/resume on Android app lifecycle
 - Tests for road generation, simple physics, native matrix math, and geometry
 
@@ -48,15 +49,27 @@ npx expo install --fix
 npx expo run:android
 ~~~
 
-To produce an Android debug APK after prebuild:
+To build an **offline standalone APK**, use a release build (not debug):
 
 ~~~sh
+npx expo prebuild --platform android --clean
 cd android
-./gradlew assembleDebug
+./gradlew :app:assembleRelease
+unzip -Z -1 app/build/outputs/apk/release/app-release.apk | grep -Fx assets/index.android.bundle
 ~~~
 
-This compiles Android native code, so it is not a browser application. An
-installable APK has **not** been built or tested in this repository update.
+The release APK is at `android/app/build/outputs/apk/release/app-release.apk`.
+Debug APKs use Metro and produce a red `Unable to load script` screen when
+installed on a phone without a running dev server. The GitHub Actions workflow
+now builds and uploads the *release* variant only after verifying that the
+JavaScript bundle is embedded.
+
+GitHub CI-generated builds use temporary Android signing credentials. You may
+need to uninstall the previously installed debug APK before installing the
+new release; uninstalling an app deletes its local data. Maintain a stable
+release signing key before distributing updates publicly.
+
+An Android APK has not been device-tested as part of this change.
 
 ## Next required parity stages
 
