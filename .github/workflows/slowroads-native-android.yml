@@ -108,3 +108,45 @@ jobs:
           path: Mobile/android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
           retention-days: 14
+
+      # Check that the released APK actually starts a native React host.
+      # Emulator smoke tests cannot replace testing the user's Samsung device.
+      - name: Enable hardware acceleration for Android emulator
+        run: |
+          if [ -e /dev/kvm ]; then sudo chmod 666 /dev/kvm; fi
+
+      - name: Launch standalone release APK on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: |
+            adb install -r Mobile/android/app/build/outputs/apk/release/app-release.apk
+            adb logcat -c
+            adb shell am start -W -n com.harleytg.slowroads/.MainActivity
+            sleep 18
+            adb logcat -d -v time > Mobile/slowroads-startup-logcat.txt
+            adb exec-out screencap -p > Mobile/slowroads-startup.png
+            if ! adb shell pidof com.harleytg.slowroads; then
+              echo "::error::SlowRoads process is not running after startup"
+              grep -Ei 'FATAL EXCEPTION|AndroidRuntime|com.harleytg.slowroads|expo.modules.gl' Mobile/slowroads-startup-logcat.txt | tail -120 || true
+              exit 1
+            fi
+            if grep -Ei 'FATAL EXCEPTION|Didn.t find a correct constructor for class' Mobile/slowroads-startup-logcat.txt; then
+              echo "::error::Android runtime crashed"
+              exit 1
+            fi
+            echo 'SlowRoads release APK remained running after cold launch'
+
+      - name: Upload emulator startup diagnostics
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: SlowRoads-Emulator-Startup-Diagnostics
+          path: |
+            Mobile/slowroads-startup-logcat.txt
+            Mobile/slowroads-startup.png
+          if-no-files-found: ignore
+          retention-days: 7
