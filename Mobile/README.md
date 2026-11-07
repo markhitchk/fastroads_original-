@@ -20,14 +20,15 @@ Android app. The abandoned offline WebView asset-copy plugin has been removed.
 
 - Native OpenGL ES rendering loop with depth testing and perspective camera
 - A dynamically generated, curved roadway with lane markings and terrain
-- Low-poly scenery and a temporary roadster-shaped 3D vehicle
+- Low-poly scenery and the original archived Roadster body/wheel mesh geometry
 - Real native multitouch steer, throttle, brake, pause, and reset controls
+- Original Roadster OBJ vertices/faces and wheel geometry converted into native buffers
 - Roadster baseline speed / acceleration / braking values drawn from the archive
 - Distance and MPH HUD, pause/resume on Android app lifecycle
 - Tests for road generation, simple physics, native matrix math, and geometry
 
 **THIS IS NOT A COMPLETE 1:1 GAME PORT YET.** Its procedural road layout,
-terrain, model, textures, sounds, driving/collision physics, weather, menus,
+terrain, materials/textures, sounds, driving/collision physics, weather, menus,
 vehicle inventory, and camera modes are temporary or absent. A faithful
 port requires extracting and reimplementing those systems from the archived
 compiled game. Do not publish or market this as parity-complete.

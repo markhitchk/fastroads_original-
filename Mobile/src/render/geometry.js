@@ -1,3 +1,5 @@
+import roadsterBody from '../assets/roadster-body.json';
+import roadsterWheel from '../assets/roadster-wheel.json';
 import { ROAD_HALF_WIDTH, sampleRoad } from '../engine/road.js';
 
 const PALETTE = {
@@ -10,7 +12,7 @@ const PALETTE = {
   trunk: [0.38, 0.29, 0.23],
   foliage: [0.20, 0.36, 0.26],
   foliageLight: [0.25, 0.42, 0.28],
-  carBody: [0.89, 0.91, 0.91],
+  carBody: [0.91, 0.92, 0.93],
   carTop: [0.74, 0.78, 0.80],
   glass: [0.22, 0.32, 0.36],
   tire: [0.12, 0.13, 0.14],
@@ -135,33 +137,53 @@ function addTrees(out, z0, z1) {
   }
 }
 
+function addMesh(out, mesh, position, yaw, colorSelector) {
+  const cosine = Math.cos(yaw);
+  const sine = Math.sin(yaw);
+  for (const group of mesh.groups) {
+    const color = colorSelector(group.name);
+    const vertices = group.positions;
+    for (let i = 0; i < vertices.length; i += 3) {
+      const x = vertices[i];
+      const y = vertices[i + 1];
+      const z = vertices[i + 2];
+      vertex(out, [
+        position[0] + x * cosine + z * sine,
+        position[1] + y,
+        position[2] - x * sine + z * cosine,
+      ], color);
+    }
+  }
+}
+
+function bodyColor(name) {
+  if (name.includes('headlight')) return PALETTE.edge;
+  if (name.includes('redlight') || name.includes('rearlight')) return PALETTE.lights;
+  if (name.includes('shadow')) return PALETTE.tire;
+  return PALETTE.carBody;
+}
+
+function wheelColor(name) {
+  return name.includes('metal') ? PALETTE.carTop : PALETTE.tire;
+}
+
 function addCar(out, state) {
   const p = sampleRoad(state.z);
   const x = p.x + state.lane;
-  const y = p.y + 0.22;
+  const y = p.y;
   const z = state.z;
   const yaw = state.yaw;
-  box(out, [x, y, z], [1.5, 0.43, 2.85], PALETTE.carBody, yaw);
-  box(out, [x, y + 0.42, z - 0.2], [1.22, 0.47, 1.45], PALETTE.carTop, yaw);
-  box(out, [x, y + 0.54, z + 0.47], [1.06, 0.22, 0.085], PALETTE.glass, yaw);
-  box(out, [x, y + 0.55, z - 0.9], [1.06, 0.2, 0.07], PALETTE.glass, yaw);
+  addMesh(out, roadsterBody, [x, y, z], yaw, bodyColor);
+  // Original wheel objects and the Roadster axle dimensions from the archive.
   for (const side of [-1, 1]) {
-    for (const offset of [-0.85, 0.87]) {
-      box(
-        out,
-        [x + side * 0.77, y - 0.11, z + offset],
-        [0.24, 0.46, 0.52],
-        PALETTE.tire,
-        yaw
-      );
+    for (const axle of [-1.375, 1.375]) {
+      const offsetX = side * 0.68;
+      addMesh(out, roadsterWheel, [
+        x + offsetX * Math.cos(yaw) + axle * Math.sin(yaw),
+        y + 0.342665,
+        z - offsetX * Math.sin(yaw) + axle * Math.cos(yaw),
+      ], yaw, wheelColor);
     }
-    box(
-      out,
-      [x + side * 0.52, y + 0.10, z - 1.43],
-      [0.25, 0.10, 0.06],
-      PALETTE.lights,
-      yaw
-    );
   }
 }
 
