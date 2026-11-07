@@ -23,6 +23,7 @@ Android app. The abandoned offline WebView asset-copy plugin has been removed.
 - Low-poly scenery and the original archived Roadster body/wheel mesh geometry
 - Real native multitouch steer, throttle, brake, pause, and reset controls
 - Original Roadster OBJ vertices/faces and wheel geometry converted into native buffers
+  and checked in as JavaScript arrays
 - Roadster baseline speed / acceleration / braking values drawn from the archive
 - Distance and MPH HUD, pause/resume on Android app lifecycle
 - Tests for road generation, simple physics, native matrix math, and geometry

@@ -1,5 +1,5 @@
-import roadsterBody from '../assets/roadster-body.json';
-import roadsterWheel from '../assets/roadster-wheel.json';
+import roadsterBody from '../assets/roadster-body.js';
+import roadsterWheel from '../assets/roadster-wheel.js';
 import { ROAD_HALF_WIDTH, sampleRoad } from '../engine/road.js';
 
 const PALETTE = {

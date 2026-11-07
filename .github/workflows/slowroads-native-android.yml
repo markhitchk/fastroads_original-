@@ -1,0 +1,67 @@
+name: SlowRoads Native Android APK
+
+on:
+  push:
+    branches: [react-native-android]
+    paths:
+      - 'Mobile/**'
+      - '.github/workflows/slowroads-native-android.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android-debug:
+    name: Build native SlowRoads APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    defaults:
+      run:
+        working-directory: Mobile
+
+    steps:
+      - name: Checkout native port branch
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Install Android compile SDK
+        run: sdkmanager "platforms;android-37" "build-tools;36.0.0"
+
+      - name: Install npm dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run native game engine tests
+        run: npm test
+
+      - name: Verify Expo SDK dependencies
+        run: npx expo install --check
+
+      - name: Prebuild native Android project
+        run: npx expo prebuild --platform android --clean --non-interactive
+
+      - name: Assemble debug APK
+        run: cd android && ./gradlew --no-daemon assembleDebug
+
+      - name: Upload native debug APK
+        uses: actions/upload-artifact@v6
+        with:
+          name: SlowRoads-Native-Android-Debug
+          path: Mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14

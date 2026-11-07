@@ -10,7 +10,7 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 | Native GL surface / perspective camera | Prototype | `src/render/NativeRenderer.js` |
 | Procedural road geometry | Prototype, **not parity** | `src/engine/road.js` |
 | Hills, off-world, weather, seasons | Missing | Archived JS / scene options |
-| Original roadster 3D mesh and wheels | Original OBJ geometry imported into native renderer; shaders/materials/textures still partial | `src/assets/roadster-*.json` |
+| Original roadster 3D mesh and wheels | Original OBJ geometry imported into native renderer; shaders/materials/textures still partial | `src/assets/roadster-*.js` |
 | Speed/accelerate/brake baseline | Partial first-pass approximation | Original Roadster metrics |
 | Suspension, collision and handling | Missing | Archived vehicle physics code |
 | Roadster, Bike, Coach selection | Missing | Archived vehicle map |
