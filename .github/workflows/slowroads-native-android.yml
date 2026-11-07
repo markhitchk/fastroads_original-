@@ -122,23 +122,7 @@ jobs:
           arch: x86_64
           profile: pixel_6
           disable-animations: true
-          script: |
-            adb install -r Mobile/android/app/build/outputs/apk/release/app-release.apk
-            adb logcat -c
-            adb shell am start -W -n com.harleytg.slowroads/.MainActivity
-            sleep 18
-            adb logcat -d -v time > Mobile/slowroads-startup-logcat.txt
-            adb exec-out screencap -p > Mobile/slowroads-startup.png
-            if ! adb shell pidof com.harleytg.slowroads; then
-              echo "::error::SlowRoads process is not running after startup"
-              grep -Ei 'FATAL EXCEPTION|AndroidRuntime|com.harleytg.slowroads|expo.modules.gl' Mobile/slowroads-startup-logcat.txt | tail -120 || true
-              exit 1
-            fi
-            if grep -Ei 'FATAL EXCEPTION|Didn.t find a correct constructor for class' Mobile/slowroads-startup-logcat.txt; then
-              echo "::error::Android runtime crashed"
-              exit 1
-            fi
-            echo 'SlowRoads release APK remained running after cold launch'
+          script: bash Mobile/scripts/emulator-smoke.sh
 
       - name: Upload emulator startup diagnostics
         if: always()

@@ -12,6 +12,7 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 | WebView removed | Done | `Mobile/App.js` and package.json |
 | Native GL surface / perspective camera | Prototype | `src/render/NativeRenderer.js` |
 | Procedural road geometry | Sine-wave approximation; **does not reproduce requested seed** | `src/engine/road.js` |
+| Requested official world-code reference | Parsed/tested, **NOT simulated** | `src/reference/targetWorld.js` |
 | Hills, off-world, weather, seasons | Missing for current official 2.4.2 | Official game reference |
 | Original roadster 3D mesh and wheels | Original OBJ geometry imported into native renderer; shaders/materials/textures still partial | `src/assets/roadster-*.js` |
 | Speed/accelerate/brake baseline | Partial first-pass approximation | Original Roadster metrics |
@@ -39,5 +40,3 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 **Acceptance criterion:** 1:1 means the same visible layout, assets,
 gameplay mechanics, UI interactions, controls, persistence, audio and camera
 behavior. Passing the foundational native tests does not constitute parity.
-
-| Requested official world-code reference | Parsed/tested, **NOT simulated** | `src/reference/targetWorld.js` |
