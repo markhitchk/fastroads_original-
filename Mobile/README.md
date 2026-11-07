@@ -1,4 +1,4 @@
-# SlowRoads — true React Native Android port (in progress)
+# SlowRoads — independent native Android prototype (NOT official game parity)
 
 **Branch:** react-native-android  
 **App:** SlowRoads  
@@ -12,9 +12,12 @@ custom shaders; the controls and game HUD are native React Native views.
 
 **No WebView. No browser-hosted game. No HTML or DOM rendering.**
 
-The existing archived website sources in the parent repository remain a
-reference for the original game. They are not loaded or executed by the
-Android app. The abandoned offline WebView asset-copy plugin has been removed.
+The parent repository's browser files are an **older archived snapshot**, not
+the current official game. The user-requested target is the actual
+[Slow Roads 2.4.2 world A2-c1d60f6c@0](https://slowroads.io/#A2-c1d60f6c@0).
+The present Android prototype does **not** reproduce that world, scene,
+physics or engine. See [TARGET_OFFICIAL_GAME.md](./TARGET_OFFICIAL_GAME.md).
+The archived game is not executed by Android; no WebView is used.
 
 ## Current implementation
 
@@ -87,9 +90,11 @@ See [PORTING.md](./PORTING.md) for the parity table and source references.
 
 ## Ownership and distribution
 
-The original Slow Roads game is credited to anslo. This repository's
-browser snapshot is not an official open-source release. Verify the rights
-to redistribute modified game code/assets before release.
+The original Slow Roads game is credited to anslo. The official site lists
+CC BY-NC-ND 4.0, which does not authorize public distribution of modified
+game artwork/code without separate permission. This archived snapshot is
+not an official open-source release. A publicly distributed 1:1 Android port
+needs explicit rights from the original creator.
 
 ## Android v0.2.2: launcher icon and startup workaround
 

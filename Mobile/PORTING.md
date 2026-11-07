@@ -1,6 +1,8 @@
 # Native SlowRoads parity tracker
 
-Source baseline: root `static/js/main.e7a33c55.chunk.js` on cleaned `master`.
+**Intended reference: [official Slow Roads 2.4.2 — world A2-c1d60f6c@0](https://slowroads.io/#A2-c1d60f6c@0).**
+**Important:** the root archived build and this native prototype are **not** the official current 2.4.2 game.
+Reference and license details: [TARGET_OFFICIAL_GAME.md](./TARGET_OFFICIAL_GAME.md).
 Android implementation: `Mobile/src/` on `react-native-android`.
 
 | Feature | Native progress | Reference |
@@ -9,15 +11,15 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 | Archived original logo, wordmark, tagline | Native SVG/text implementation | `src/components/SlowRoadsBrand.js` |
 | WebView removed | Done | `Mobile/App.js` and package.json |
 | Native GL surface / perspective camera | Prototype | `src/render/NativeRenderer.js` |
-| Procedural road geometry | Prototype, **not parity** | `src/engine/road.js` |
-| Hills, off-world, weather, seasons | Missing | Archived JS / scene options |
+| Procedural road geometry | Sine-wave approximation; **does not reproduce requested seed** | `src/engine/road.js` |
+| Hills, off-world, weather, seasons | Missing for current official 2.4.2 | Official game reference |
 | Original roadster 3D mesh and wheels | Original OBJ geometry imported into native renderer; shaders/materials/textures still partial | `src/assets/roadster-*.js` |
 | Speed/accelerate/brake baseline | Partial first-pass approximation | Original Roadster metrics |
 | Suspension, collision and handling | Missing | Archived vehicle physics code |
 | Roadster, Bike, Coach selection | Missing | Archived vehicle map |
 | Touch buttons | New Android implementation | `src/NativeDrivingGame.js` |
 | Keyboard/controller/gyro | Missing | Platform input work |
-| Full original HUD/menu/settings | Missing | Archived React UI |
+| Full current 2.4.2 HUD/menu/settings | Missing | Official game reference |
 | Cameras, autopilot, cruise control | Missing | Archived game logic |
 | Audio, haptics, local settings | Missing | Original behavior |
 | GPU/native GL rendering test on device | Not performed | Requires installed debug APK |
@@ -37,3 +39,5 @@ Android implementation: `Mobile/src/` on `react-native-android`.
 **Acceptance criterion:** 1:1 means the same visible layout, assets,
 gameplay mechanics, UI interactions, controls, persistence, audio and camera
 behavior. Passing the foundational native tests does not constitute parity.
+
+| Requested official world-code reference | Parsed/tested, **NOT simulated** | `src/reference/targetWorld.js` |
