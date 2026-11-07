@@ -3,16 +3,26 @@
     "name": "SlowRoads",
     "slug": "slowroads",
     "scheme": "slowroads",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "orientation": "landscape",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#90b5cb",
     "android": {
       "package": "com.harleytg.slowroads",
-      "versionCode": 3
+      "versionCode": 4,
+      "icon": "./assets/icon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "monochromeImage": "./assets/monochrome-icon.png",
+        "backgroundColor": "#10202A"
+      }
     },
     "platforms": [
       "android"
+    ],
+    "icon": "./assets/icon.png",
+    "plugins": [
+      "./plugins/withExpoGlR8KeepRules.cjs"
     ]
   }
 }

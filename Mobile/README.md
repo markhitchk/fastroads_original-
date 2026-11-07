@@ -90,3 +90,10 @@ See [PORTING.md](./PORTING.md) for the parity table and source references.
 The original Slow Roads game is credited to anslo. This repository's
 browser snapshot is not an official open-source release. Verify the rights
 to redistribute modified game code/assets before release.
+
+## Android v0.2.2: launcher icon and startup workaround
+
+- `npm run icons` generates three 1024x1024 PNG launcher icon assets from the repository's original `favicon_circle.svg`: legacy, adaptive foreground, and monochrome icon. The app.json icon fields refer to these files.
+- `plugins/withExpoGlR8KeepRules.cjs` preserves expo-gl classes needed for reflection/JNI during release builds; see Expo issue #51948.
+- Re-run `npm install && npm run prebuild` before building locally. The GitHub release workflow generates icons, checks the keep rule, and builds a standalone APK.
+- The workaround is based on a documented SDK 58 issue; on-device confirmation and device logcat remain necessary before calling the crash resolved.
